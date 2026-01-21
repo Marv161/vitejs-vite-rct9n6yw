@@ -30,7 +30,9 @@ jobs:
           cache: 'npm'
           
       - name: Instalar dependencias
-        run: npm ci
+        # CAMBIO: Usamos 'install' en lugar de 'ci' para evitar errores por
+        # editar el package.json manualmente en la web.
+        run: npm install
         
       - name: Construir Juego
         # IMPORTANTE: Aquí forzamos la "base" para que coincida con el nombre de tu repo.
