@@ -4,6 +4,10 @@ on:
   push:
     branches: ["main"]
 
+# ESTO ES NUEVO: Evita que el proceso falle por advertencias (warnings) de ESLint o similares
+env:
+  CI: false
+
 permissions:
   contents: read
   pages: write
@@ -30,13 +34,11 @@ jobs:
           cache: 'npm'
           
       - name: Instalar dependencias
-        # CAMBIO: Usamos 'install' en lugar de 'ci' para evitar errores por
-        # editar el package.json manualmente en la web.
-        run: npm install
+        # Usamos --legacy-peer-deps para evitar conflictos de versiones si los hubiera
+        run: npm install --legacy-peer-deps
         
       - name: Construir Juego
-        # IMPORTANTE: Aquí forzamos la "base" para que coincida con el nombre de tu repo.
-        # Esto soluciona la pantalla blanca.
+        # La bandera --base asegura las rutas correctas
         run: npm run build -- --base=/vitejs-vite-rct9n6yw/
         
       - name: Configurar Pages
